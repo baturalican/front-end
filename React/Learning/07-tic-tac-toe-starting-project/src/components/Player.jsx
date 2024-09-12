@@ -7,13 +7,19 @@ export default function Player({ name, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
 
   function handleEditClick() {
-    setIsEditing(true);
+    // VERY IMPORTANT NOTE HERE!!!
+    // We CANNOT write the below line like this:
+    // setIsEditing(!isEditing);
+    // Because if we do that, React schedules the update of the variable (isEditing)
+    // It does not change it immediately!!!
+    setIsEditing((editing) => !editing);
+  
   }
 
   let playerName =  <span className="player-name">{name}</span>;
 
   if (isEditing) {
-    playerName = <input type="text" required/>
+    playerName = <input type="text" required value={name}/>
   }
 
   return (
@@ -22,7 +28,7 @@ export default function Player({ name, symbol }) {
         {playerName}
         <span className="player-symbol">{symbol}</span>
       </span>
-      <button onClick={handleEditClick}>Edit</button>
+      <button onClick={handleEditClick}>{isEditing ? "Save" : "Edit"}</button>
     </li>
   );
 }
