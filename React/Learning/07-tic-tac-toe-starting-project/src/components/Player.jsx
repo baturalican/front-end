@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ intialName, symbol, isActive }) {
+export default function Player({ intialName, symbol, isActive, onChangeName }) {
   const [playerName, setPlayerName] = useState(intialName);
 
   // false is the initial state
@@ -15,6 +15,10 @@ export default function Player({ intialName, symbol, isActive }) {
     // Because if we do that, React schedules the update of the variable (isEditing)
     // It does not change it immediately!!!
     setIsEditing((editing) => !editing);
+
+    if (isEditing === true) {
+      onChangeName(symbol, playerName);
+    }
   }
 
   function handleChange(event) {
